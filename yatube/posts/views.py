@@ -29,16 +29,16 @@ def group_list(request, slug):
     page_obj = paginator.get_page(page_number)
     template = 'posts/group_list.html'
     context = {
-        'posts': page_obj,
-        'groups': group
+        'group': group,
+        'page_obj': page_obj
     }
     return render(request, template, context)
 
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    posts = author.posts.all()
-    paginator = Paginator(posts, SELECT_LIMIT)
+    posts_author = author.posts.all()
+    paginator = Paginator(posts_author, SELECT_LIMIT)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'posts/profile.html', {
