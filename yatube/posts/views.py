@@ -48,8 +48,10 @@ def profile(request, username):
 
 
 def post_detail(request, post_id):
+    posts = get_object_or_404(Post, id=post_id)
     return render(request, 'posts/post_detail.html', {
-        'post': get_object_or_404(Post, id=post_id)
+        'post': posts,
+        'post_count': Post.objects.filter(author_id=posts.author_id).count()
     })
 
 
